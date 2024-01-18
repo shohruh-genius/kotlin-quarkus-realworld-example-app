@@ -18,18 +18,19 @@ import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
 import org.mockito.kotlin.any
-import javax.inject.Inject
-import javax.ws.rs.core.HttpHeaders.LOCATION
-import javax.ws.rs.core.MediaType.APPLICATION_JSON
-import javax.ws.rs.core.Response.Status.BAD_REQUEST
-import javax.ws.rs.core.Response.Status.CREATED
-import javax.ws.rs.core.Response.Status.OK
+import jakarta.inject.Inject
+import jakarta.ws.rs.core.HttpHeaders.LOCATION
+import jakarta.ws.rs.core.MediaType.APPLICATION_JSON
+import jakarta.ws.rs.core.Response.Status.BAD_REQUEST
+import jakarta.ws.rs.core.Response.Status.CREATED
+import jakarta.ws.rs.core.Response.Status.OK
 
 @QuarkusTest
 @TestHTTPEndpoint(UserResource::class)
 internal class UserResourceIT {
     @InjectMock
     lateinit var service: UserService
+
     @Inject
     lateinit var objectMapper: ObjectMapper
 
@@ -37,9 +38,10 @@ internal class UserResourceIT {
     fun `Given a new user, when a registration request is made, then response should be created`() {
         val token = "GENERATED_TOKEN"
         val newUser = UserFactory.create()
-        val userRegistrationReq = newUser.run {
-            UserRegistrationRequest(username, email, password)
-        }
+        val userRegistrationReq =
+            newUser.run {
+                UserRegistrationRequest(username, email, password)
+            }
 
         `when`(service.register(userRegistrationReq)).thenReturn(
             UserResponse.build(newUser, token)
@@ -77,9 +79,10 @@ internal class UserResourceIT {
     @Test
     fun `Given a valid login details, when a login request is made, then response should be ok with correct user payload`() {
         val token = "GENERATED_TOKEN"
-        val requestedUser = UserFactory.create().run {
-            UserResponse(username, email, token, bio, image)
-        }
+        val requestedUser =
+            UserFactory.create().run {
+                UserResponse(username, email, token, bio, image)
+            }
         val userLoginReq = UserLoginRequest(requestedUser.email, token)
 
         `when`(service.login(userLoginReq)).thenReturn(requestedUser)
@@ -109,9 +112,10 @@ internal class UserResourceIT {
     @TestSecurity(user = "loggedInUser", roles = [USER])
     fun `Given an already logged in user, when a get users request is made, then response should return current logged in user details`() {
         val token = "GENERATED_TOKEN"
-        val loggedInUser = UserFactory.create(username = "loggedInUser").run {
-            UserResponse(username, email, token, bio, image)
-        }
+        val loggedInUser =
+            UserFactory.create(username = "loggedInUser").run {
+                UserResponse(username, email, token, bio, image)
+            }
 
         `when`(service.get(loggedInUser.username)).thenReturn(loggedInUser)
 
@@ -138,9 +142,10 @@ internal class UserResourceIT {
     fun `Given logged in user, when a valid update request is made, then response should return updated user`() {
         val token = "GENERATED_TOKEN"
         val loggedInUser = UserFactory.create(username = "loggedInUser")
-        val userUpdateReq = loggedInUser.run {
-            UserUpdateRequest("newUsername", null, null, "newBio", "")
-        }
+        val userUpdateReq =
+            loggedInUser.run {
+                UserUpdateRequest("newUsername", null, null, "newBio", "")
+            }
 
         `when`(service.update(loggedInUser.username, userUpdateReq))
             .thenReturn(

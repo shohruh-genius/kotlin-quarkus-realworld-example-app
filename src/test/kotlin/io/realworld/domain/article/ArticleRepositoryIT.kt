@@ -15,8 +15,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import javax.inject.Inject
-import javax.transaction.Transactional
+import jakarta.inject.Inject
+import jakarta.transaction.Transactional
 
 @QuarkusTest
 internal class ArticleRepositoryIT {
@@ -36,9 +36,10 @@ internal class ArticleRepositoryIT {
     @Transactional
     fun `Given existing article and user, when exists query is ran to verify if the user owns the article, then repository should verify article authorship`() {
         val articleAuthor = UserFactory.create()
-        val existingArticle = ArticleFactory.create(
-            author = articleAuthor
-        )
+        val existingArticle =
+            ArticleFactory.create(
+                author = articleAuthor
+            )
 
         userRepository.persist(articleAuthor)
         repository.persist(existingArticle)
@@ -51,10 +52,11 @@ internal class ArticleRepositoryIT {
     fun `Given existing article, when queried by slug, then repository should return correct article details`() {
         val articleAuthor = UserFactory.create()
         val articleTags = TagFactory.create(3)
-        val existingArticle = ArticleFactory.create(
-            tag = articleTags.toMutableList(),
-            author = articleAuthor
-        )
+        val existingArticle =
+            ArticleFactory.create(
+                tag = articleTags.toMutableList(),
+                author = articleAuthor
+            )
 
         userRepository.persist(articleAuthor)
         repository.persist(existingArticle)
@@ -70,12 +72,13 @@ internal class ArticleRepositoryIT {
         val articleAuthors = UserFactory.create(3)
         val articleTags = TagFactory.create(3)
 
-        val existingArticles = articleAuthors.mapIndexed { i, articleAuthor ->
-            ArticleFactory.create(
-                tag = mutableListOf(articleTags[i]),
-                author = articleAuthor
-            )
-        }
+        val existingArticles =
+            articleAuthors.mapIndexed { i, articleAuthor ->
+                ArticleFactory.create(
+                    tag = mutableListOf(articleTags[i]),
+                    author = articleAuthor
+                )
+            }
 
         userRepository.persist(articleAuthors)
         repository.persist(existingArticles)
@@ -105,12 +108,13 @@ internal class ArticleRepositoryIT {
         val articleAuthors = UserFactory.create(3)
         val articleTags = TagFactory.create(3)
 
-        val existingArticles = articleAuthors.mapIndexed { i, articleAuthor ->
-            ArticleFactory.create(
-                tag = mutableListOf(articleTags[i]),
-                author = articleAuthor
-            )
-        }
+        val existingArticles =
+            articleAuthors.mapIndexed { i, articleAuthor ->
+                ArticleFactory.create(
+                    tag = mutableListOf(articleTags[i]),
+                    author = articleAuthor
+                )
+            }
 
         userRepository.persist(articleAuthors)
         repository.persist(existingArticles)
@@ -140,16 +144,18 @@ internal class ArticleRepositoryIT {
         val loggedInUser = UserFactory.create()
         val articleAuthors = UserFactory.create(3)
 
-        val existingArticles = articleAuthors.map {
-            ArticleFactory.create(author = it)
-        }
+        val existingArticles =
+            articleAuthors.map {
+                ArticleFactory.create(author = it)
+            }
 
         userRepository.persist(articleAuthors.plus(loggedInUser))
         repository.persist(existingArticles)
 
-        val authorArticlesThatLoggedInUserFollows = existingArticles
-            .take(2)
-            .onEach { profileService.follow(it.author.username, loggedInUser.username) }
+        val authorArticlesThatLoggedInUserFollows =
+            existingArticles
+                .take(2)
+                .onEach { profileService.follow(it.author.username, loggedInUser.username) }
 
         val feed = repository.findByTheAuthorsAUserFollows(userId = loggedInUser.username)
 

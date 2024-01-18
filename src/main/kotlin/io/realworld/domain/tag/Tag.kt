@@ -2,16 +2,16 @@ package io.realworld.domain.tag
 
 import io.quarkus.runtime.annotations.RegisterForReflection
 import io.realworld.infrastructure.database.Tables.TAG_TABLE
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.validation.constraints.Size
+import jakarta.persistence.Entity
+import jakarta.persistence.Id
+import jakarta.validation.constraints.Size
 
 @Entity(name = TAG_TABLE)
 @RegisterForReflection
 open class Tag(
     @Id
     @field:Size(min = 0, max = 31)
-    open var name: String = "",
+    open var name: String = ""
 ) {
     override fun toString(): String = "Tag($name)"
 

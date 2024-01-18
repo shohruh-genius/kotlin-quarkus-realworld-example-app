@@ -9,7 +9,6 @@ import io.quarkus.runtime.annotations.RegisterForReflection
 data class UserLoginRequest(
     @JsonProperty("email")
     val email: String,
-
     @JsonProperty("password")
-    val password: String,
+    val password: String
 )

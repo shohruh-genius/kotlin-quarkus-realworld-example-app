@@ -11,7 +11,7 @@ class ProfileFactory {
          */
         fun create(
             user: User,
-            following: Boolean = false,
+            following: Boolean = false
         ): ProfileResponse = ProfileResponse(user.username, user.bio, user.image, following)
 
         /**
@@ -21,7 +21,7 @@ class ProfileFactory {
             username: String = "User-${randomUUID()}".substring(0, 20),
             bio: String = "Hello, I am $username!",
             image: String = "path/to/$username.jpg",
-            following: Boolean = false,
+            following: Boolean = false
         ): ProfileResponse = ProfileResponse(username, bio, image, following)
 
         /**
@@ -30,7 +30,7 @@ class ProfileFactory {
          */
         fun create(
             amount: Int,
-            following: Boolean = false,
+            following: Boolean = false
         ): List<ProfileResponse> = (0 until amount).map { create(following = following) }
     }
 }

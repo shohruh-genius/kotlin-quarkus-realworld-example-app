@@ -15,14 +15,14 @@ import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.CoreMatchers.`is`
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import java.util.UUID
-import javax.inject.Inject
-import javax.ws.rs.core.HttpHeaders.LOCATION
-import javax.ws.rs.core.MediaType.APPLICATION_JSON
-import javax.ws.rs.core.Response.Status.CREATED
-import javax.ws.rs.core.Response.Status.OK
+import jakarta.inject.Inject
+import jakarta.ws.rs.core.HttpHeaders.LOCATION
+import jakarta.ws.rs.core.MediaType.APPLICATION_JSON
+import jakarta.ws.rs.core.Response.Status.CREATED
+import jakarta.ws.rs.core.Response.Status.OK
 
 @QuarkusTest
 @TestHTTPEndpoint(CommentResource::class)

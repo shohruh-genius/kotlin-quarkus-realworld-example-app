@@ -21,7 +21,7 @@ class CommentFactory {
             created: Instant = now(),
             updated: Instant = now(),
             author: User = UserFactory.create(),
-            article: Article = ArticleFactory.create(),
+            article: Article = ArticleFactory.create()
         ): Comment = Comment(id, body, created, updated, author, article)
 
         /**
@@ -31,7 +31,7 @@ class CommentFactory {
         fun create(
             amount: Int,
             author: User = UserFactory.create(),
-            article: Article = ArticleFactory.create(),
+            article: Article = ArticleFactory.create()
         ): List<Comment> = (0 until amount).map { create(author = author, article = article) }
     }
 }

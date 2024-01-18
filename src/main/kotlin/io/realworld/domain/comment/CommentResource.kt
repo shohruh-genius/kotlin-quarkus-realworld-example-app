@@ -5,27 +5,27 @@ import io.realworld.infrastructure.security.Role.ADMIN
 import io.realworld.infrastructure.security.Role.USER
 import io.realworld.infrastructure.web.Routes.ARTICLES_PATH
 import io.realworld.utils.ValidationMessages.Companion.REQUEST_BODY_MUST_NOT_BE_NULL
-import java.util.UUID
-import javax.annotation.security.PermitAll
-import javax.annotation.security.RolesAllowed
-import javax.transaction.Transactional
-import javax.validation.Valid
-import javax.validation.constraints.NotNull
-import javax.ws.rs.Consumes
-import javax.ws.rs.DELETE
-import javax.ws.rs.GET
-import javax.ws.rs.POST
-import javax.ws.rs.Path
-import javax.ws.rs.PathParam
-import javax.ws.rs.Produces
-import javax.ws.rs.core.Context
-import javax.ws.rs.core.MediaType.APPLICATION_JSON
-import javax.ws.rs.core.Response
-import javax.ws.rs.core.Response.Status.CREATED
-import javax.ws.rs.core.Response.Status.OK
-import javax.ws.rs.core.Response.ok
-import javax.ws.rs.core.SecurityContext
-import javax.ws.rs.core.UriBuilder.fromResource
+import java.util.*
+import jakarta.annotation.security.PermitAll
+import jakarta.annotation.security.RolesAllowed
+import jakarta.transaction.Transactional
+import jakarta.validation.Valid
+import jakarta.validation.constraints.NotNull
+import jakarta.ws.rs.Consumes
+import jakarta.ws.rs.DELETE
+import jakarta.ws.rs.GET
+import jakarta.ws.rs.POST
+import jakarta.ws.rs.Path
+import jakarta.ws.rs.PathParam
+import jakarta.ws.rs.Produces
+import jakarta.ws.rs.core.Context
+import jakarta.ws.rs.core.MediaType.APPLICATION_JSON
+import jakarta.ws.rs.core.Response
+import jakarta.ws.rs.core.Response.Status.CREATED
+import jakarta.ws.rs.core.Response.Status.OK
+import jakarta.ws.rs.core.Response.ok
+import jakarta.ws.rs.core.SecurityContext
+import jakarta.ws.rs.core.UriBuilder.fromResource
 
 @Path(ARTICLES_PATH)
 class CommentResource(
@@ -38,8 +38,7 @@ class CommentResource(
     fun list(
         @PathParam("slug") slug: UUID,
         @Context securityContext: SecurityContext
-    ): Response =
-        ok(service.list(slug, securityContext.userPrincipal.name)).status(OK).build()
+    ): Response = ok(service.list(slug, securityContext.userPrincipal.name)).status(OK).build()
 
     @POST
     @Path("/{slug}/comments")
@@ -48,17 +47,13 @@ class CommentResource(
     @Produces(APPLICATION_JSON)
     @RolesAllowed(USER)
     fun create(
-        @Valid
-        @NotNull(message = REQUEST_BODY_MUST_NOT_BE_NULL)
-        newCommentRequest: CommentCreateRequest,
+        @Valid @NotNull(message = REQUEST_BODY_MUST_NOT_BE_NULL) newCommentRequest: CommentCreateRequest,
         @PathParam("slug") slug: UUID,
         @Context securityContext: SecurityContext
-    ): Response = service.create(newCommentRequest, slug, securityContext.userPrincipal.name).run {
-        ok(this)
-            .location(fromResource(CommentResource::class.java).path("/$slug/comments/$id").build())
-            .status(CREATED)
-            .build()
-    }
+    ): Response =
+        service.create(newCommentRequest, slug, securityContext.userPrincipal.name).run {
+            ok(this).location(fromResource(CommentResource::class.java).path("/$slug/comments/$id").build()).status(CREATED).build()
+        }
 
     @DELETE
     @Path("/{slug}/comments/{id}")
@@ -69,9 +64,12 @@ class CommentResource(
         @PathParam("slug") slug: UUID,
         @PathParam("id") id: Long,
         @Context securityContext: SecurityContext
-    ): Response = securityContext.run {
-        if (service.isCommentAuthor(id, userPrincipal.name) || isUserInRole(ADMIN))
-            ok(service.delete(id)).build()
-        else throw InvalidAuthorException()
-    }
+    ): Response =
+        securityContext.run {
+            if (service.isCommentAuthor(id, userPrincipal.name) || isUserInRole(ADMIN)) {
+                ok(service.delete(id)).build()
+            } else {
+                throw InvalidAuthorException()
+            }
+        }
 }

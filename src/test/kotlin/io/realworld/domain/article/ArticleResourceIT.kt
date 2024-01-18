@@ -15,30 +15,32 @@ import org.hamcrest.CoreMatchers
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.Matchers.blankOrNullString
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
+import org.mockito.Mockito.`when`
 import java.util.UUID.randomUUID
-import javax.inject.Inject
-import javax.ws.rs.core.HttpHeaders.LOCATION
-import javax.ws.rs.core.MediaType.APPLICATION_JSON
-import javax.ws.rs.core.Response.Status.CREATED
-import javax.ws.rs.core.Response.Status.OK
-import javax.ws.rs.core.Response.Status.UNAUTHORIZED
+import jakarta.inject.Inject
+import jakarta.ws.rs.core.HttpHeaders.LOCATION
+import jakarta.ws.rs.core.MediaType.APPLICATION_JSON
+import jakarta.ws.rs.core.Response.Status.CREATED
+import jakarta.ws.rs.core.Response.Status.OK
+import jakarta.ws.rs.core.Response.Status.UNAUTHORIZED
 
 @QuarkusTest
 @TestHTTPEndpoint(ArticleResource::class)
 internal class ArticleResourceIT {
     @InjectMock
     lateinit var service: ArticleService
+
     @Inject
     lateinit var objectMapper: ObjectMapper
 
     @Test
     fun `Given existing articles, when a matching filtered list of articles are requested, then response should be 200 with correct payload`() {
-        val existingArticles = ArticleFactory.create(
-            amount = 3,
-            tags = mutableListOf(Tag("UK"))
-        )
+        val existingArticles =
+            ArticleFactory.create(
+                amount = 3,
+                tags = mutableListOf(Tag("UK"))
+            )
 
         `when`(service.list(tags = listOf("UK"))).thenReturn(
             ArticlesResponse.build(existingArticles.map(ArticleResponse::build))
@@ -108,9 +110,10 @@ internal class ArticleResourceIT {
     @TestSecurity(user = "loggedInUser", roles = [USER])
     fun `Given an authenticated user, when a valid new article request is made, then response should be created`() {
         val loggedInUser = UserFactory.create(username = "loggedInUser")
-        val newArticleRequest = ArticleFactory.create().run {
-            ArticleCreateRequest(title, description, body)
-        }
+        val newArticleRequest =
+            ArticleFactory.create().run {
+                ArticleCreateRequest(title, description, body)
+            }
         val newArticle = newArticleRequest.toEntity(loggedInUser.username)
 
         `when`(service.create(newArticleRequest, loggedInUser.username)).thenReturn(

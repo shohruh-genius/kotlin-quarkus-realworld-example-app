@@ -8,13 +8,13 @@ import io.realworld.infrastructure.security.Role.USER
 import io.realworld.support.factory.ProfileFactory
 import io.realworld.support.factory.UserFactory
 import io.restassured.RestAssured.given
-import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.equalTo
+import org.hamcrest.CoreMatchers.`is`
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
-import javax.ws.rs.core.MediaType.APPLICATION_JSON
-import javax.ws.rs.core.Response.Status.OK
+import org.mockito.Mockito.`when`
+import jakarta.ws.rs.core.MediaType.APPLICATION_JSON
+import jakarta.ws.rs.core.Response.Status.OK
 
 @QuarkusTest
 @TestHTTPEndpoint(ProfileResource::class)

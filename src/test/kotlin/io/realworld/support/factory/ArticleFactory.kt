@@ -21,7 +21,7 @@ class ArticleFactory {
             tag: MutableList<Tag> = mutableListOf(),
             created: Instant = now(),
             updated: Instant = now(),
-            author: User = UserFactory.create(),
+            author: User = UserFactory.create()
         ): Article = Article(slug, title, description, body, tag, created, updated, author)
 
         /**
@@ -31,7 +31,7 @@ class ArticleFactory {
         fun create(
             amount: Int,
             tags: MutableList<Tag> = mutableListOf(),
-            author: User = UserFactory.create(),
+            author: User = UserFactory.create()
         ): List<Article> = (0 until amount).map { create(tag = tags, author = author) }
     }
 }

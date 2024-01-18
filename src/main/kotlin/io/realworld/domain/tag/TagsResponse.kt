@@ -8,11 +8,10 @@ import io.quarkus.runtime.annotations.RegisterForReflection
 @RegisterForReflection
 data class TagsResponse(
     @JsonValue
-    val tags: List<String>,
+    val tags: List<String>
 ) {
     companion object {
         @JvmStatic
-        fun build(tags: List<Tag>): TagsResponse =
-            TagsResponse(tags.map { it.name })
+        fun build(tags: List<Tag>): TagsResponse = TagsResponse(tags.map { it.name })
     }
 }

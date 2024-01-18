@@ -1,6 +1,6 @@
 package io.realworld.infrastructure.web
 
-import javax.inject.Qualifier
+import jakarta.inject.Qualifier
 import kotlin.annotation.AnnotationRetention.RUNTIME
 import kotlin.annotation.AnnotationTarget.FIELD
 import kotlin.annotation.AnnotationTarget.FUNCTION

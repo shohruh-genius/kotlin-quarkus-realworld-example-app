@@ -11,15 +11,17 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import javax.inject.Inject
-import javax.transaction.Transactional
+import jakarta.inject.Inject
+import jakarta.transaction.Transactional
 
 @QuarkusTest
 internal class UserRepositoryIT {
     @Inject
     lateinit var repository: UserRepository
+
     @Inject
     lateinit var articleRepository: ArticleRepository
+
     @Inject
     lateinit var commentRepository: CommentRepository
 

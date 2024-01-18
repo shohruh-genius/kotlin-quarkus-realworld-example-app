@@ -37,19 +37,20 @@ internal class QueryBuilderTest {
                 AND upper(authors.username) in (:authors)
         """
 
-        val actual = QueryBuilder()
-            .add(
-                SELECT("articles from ArticleEntity as articles"),
-                JOIN("articles.tags as tags"),
-                JOIN("tags.primaryKey.tag as tag"),
-                JOIN("articles.author as authors"),
-                JOIN("articles.favorites as favorites"),
-                JOIN("favorites.primaryKey.user as user"),
-                WHERE("upper(tag.name) in (:tags)"),
-                AND("upper(user.username) in (:favorites)"),
-                AND("upper(authors.username) in (:authors)")
-            )
-            .build()
+        val actual =
+            QueryBuilder()
+                .add(
+                    SELECT("articles from ArticleEntity as articles"),
+                    JOIN("articles.tags as tags"),
+                    JOIN("tags.primaryKey.tag as tag"),
+                    JOIN("articles.author as authors"),
+                    JOIN("articles.favorites as favorites"),
+                    JOIN("favorites.primaryKey.user as user"),
+                    WHERE("upper(tag.name) in (:tags)"),
+                    AND("upper(user.username) in (:favorites)"),
+                    AND("upper(authors.username) in (:authors)")
+                )
+                .build()
 
         assertEquals(expectedCorrectQuery.trim(), actual.trim())
     }
@@ -59,13 +60,14 @@ internal class QueryBuilderTest {
         val expected = SELECT("articles from ArticleEntity as articles")
 
         val tags = listOf<String>()
-        val actual = QueryBuilder()
-            .add(expected)
-            .addIf(
-                tags.isNotEmpty(),
-                JOIN("articles.tags as tags")
-            )
-            .build()
+        val actual =
+            QueryBuilder()
+                .add(expected)
+                .addIf(
+                    tags.isNotEmpty(),
+                    JOIN("articles.tags as tags")
+                )
+                .build()
 
         assertEquals(expected.build(), actual)
     }
@@ -77,10 +79,11 @@ internal class QueryBuilderTest {
         val tags = listOf("cooking", "it")
         val parameters = hashMapOf<String, Any>()
 
-        val actual = QueryBuilder()
-            .add(SELECT("articles from ArticleEntity as articles"))
-            .addIf(tags.isNotEmpty(), JOIN("articles.tags as tags")) { parameters["tags"] = tags }
-            .build()
+        val actual =
+            QueryBuilder()
+                .add(SELECT("articles from ArticleEntity as articles"))
+                .addIf(tags.isNotEmpty(), JOIN("articles.tags as tags")) { parameters["tags"] = tags }
+                .build()
 
         assertEquals(expected, actual)
         assertEquals(tags, parameters["tags"])
@@ -93,10 +96,11 @@ internal class QueryBuilderTest {
         val tags = listOf("cooking", "it")
         val parameters = hashMapOf<String, Any>()
 
-        val actual = QueryBuilder()
-            .add(SELECT("articles from ArticleEntity as articles"))
-            .addIf(tags.isEmpty(), JOIN("articles.tags as tags")) { parameters["tags"] = tags }
-            .build()
+        val actual =
+            QueryBuilder()
+                .add(SELECT("articles from ArticleEntity as articles"))
+                .addIf(tags.isEmpty(), JOIN("articles.tags as tags")) { parameters["tags"] = tags }
+                .build()
 
         assertEquals(expected, actual)
         assertNull(parameters["tags"])

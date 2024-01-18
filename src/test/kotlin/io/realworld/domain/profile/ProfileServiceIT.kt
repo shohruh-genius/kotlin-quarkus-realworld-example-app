@@ -7,15 +7,17 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import javax.inject.Inject
-import javax.transaction.Transactional
+import jakarta.inject.Inject
+import jakarta.transaction.Transactional
 
 @QuarkusTest
 internal class ProfileServiceIT {
     @Inject
     lateinit var service: ProfileService
+
     @Inject
     lateinit var followRelationshipRepository: FollowRelationshipRepository
+
     @Inject
     lateinit var userRepository: UserRepository
 

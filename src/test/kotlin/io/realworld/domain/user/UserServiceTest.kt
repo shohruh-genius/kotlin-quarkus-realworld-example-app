@@ -22,8 +22,10 @@ import org.mockito.kotlin.any
 internal class UserServiceTest {
     @InjectMock
     lateinit var repository: UserRepository
+
     @InjectMock
     lateinit var hashProvider: BCryptHashProvider
+
     @InjectMock
     lateinit var tokenProvider: JwtTokenProvider
 
@@ -48,9 +50,10 @@ internal class UserServiceTest {
     @Test
     fun `Given an existing username, when registered again, then UsernameAlreadyExistsException should be thrown`() {
         val existingUsername = "existingUsername"
-        val userRegistrationRequest = UserFactory.create().run {
-            UserRegistrationRequest(username = existingUsername, email, password)
-        }
+        val userRegistrationRequest =
+            UserFactory.create().run {
+                UserRegistrationRequest(username = existingUsername, email, password)
+            }
 
         `when`(repository.existsUsername(existingUsername)).thenReturn(true)
 
@@ -64,9 +67,10 @@ internal class UserServiceTest {
     @Test
     fun `Given an existing email, when registered again, then EmailAlreadyExistsException should be thrown`() {
         val existingEmail = "existing@mail.com"
-        val userRegistrationRequest = UserFactory.create().run {
-            UserRegistrationRequest(username, existingEmail, password)
-        }
+        val userRegistrationRequest =
+            UserFactory.create().run {
+                UserRegistrationRequest(username, existingEmail, password)
+            }
 
         `when`(repository.existsEmail(existingEmail)).thenReturn(true)
 
@@ -81,9 +85,10 @@ internal class UserServiceTest {
     fun `Given a valid registration request, when an persisted, then password should be hashed and a token should be generated`() {
         val token = "GENERATED_TOKEN"
         val hashedPassword = "HASHED_PASSWORD"
-        val validRegistrationRequest = UserFactory.create().run {
-            UserRegistrationRequest(username, email, password)
-        }
+        val validRegistrationRequest =
+            UserFactory.create().run {
+                UserRegistrationRequest(username, email, password)
+            }
 
         `when`(repository.existsUsername(validRegistrationRequest.username)).thenReturn(false)
         `when`(repository.existsEmail(validRegistrationRequest.email)).thenReturn(false)
@@ -100,9 +105,10 @@ internal class UserServiceTest {
     @Test
     fun `Given invalid email, when login is requested, then UnregisteredEmailException should be thrown`() {
         val invalidEmail = "INVALID_EMAIL@email.com"
-        val userLoginRequest = UserFactory.create().run {
-            UserLoginRequest(invalidEmail, password)
-        }
+        val userLoginRequest =
+            UserFactory.create().run {
+                UserLoginRequest(invalidEmail, password)
+            }
 
         `when`(repository.findByEmail(invalidEmail)).thenReturn(null)
 
@@ -115,9 +121,10 @@ internal class UserServiceTest {
     fun `Given invalid login password details, when login is requested, then InvalidPasswordException should be thrown`() {
         val invalidPassword = "INVALID_PASSWORD"
         val requestedUser = UserFactory.create()
-        val userLoginRequest = requestedUser.run {
-            UserLoginRequest(email, invalidPassword)
-        }
+        val userLoginRequest =
+            requestedUser.run {
+                UserLoginRequest(email, invalidPassword)
+            }
 
         `when`(repository.findByEmail(userLoginRequest.email)).thenReturn(requestedUser)
         `when`(hashProvider.verify(invalidPassword, requestedUser.password)).thenReturn(false)
@@ -131,9 +138,10 @@ internal class UserServiceTest {
     fun `Given valid login details, when login is requested, then a token should be generated`() {
         val token = "GENERATED_TOKEN"
         val existingUser = UserFactory.create()
-        val userLoginRequest = existingUser.run {
-            UserLoginRequest(email, password)
-        }
+        val userLoginRequest =
+            existingUser.run {
+                UserLoginRequest(email, password)
+            }
 
         `when`(repository.findByEmail(userLoginRequest.email)).thenReturn(existingUser)
         `when`(hashProvider.verify(userLoginRequest.password, existingUser.password)).thenReturn(true)

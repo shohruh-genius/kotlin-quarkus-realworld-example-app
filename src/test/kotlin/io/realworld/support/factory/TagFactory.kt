@@ -9,14 +9,14 @@ class TagFactory {
          * Creates a random tag.
          */
         fun create(
-            name: String = "TAG-${randomUUID()}".substring(0, 20),
+            name: String = "TAG-${randomUUID()}".substring(0, 20)
         ): Tag = Tag(name)
 
         /**
          * Creates X amount of tags with random names
          */
         fun create(
-            amount: Int,
+            amount: Int
         ): List<Tag> = (0 until amount).map { create() }
     }
 }

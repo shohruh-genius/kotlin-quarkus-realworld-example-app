@@ -5,43 +5,43 @@ import io.realworld.infrastructure.security.Role.USER
 import io.realworld.infrastructure.web.Routes.USERS_PATH
 import io.realworld.infrastructure.web.Routes.USER_PATH
 import io.realworld.utils.ValidationMessages.Companion.REQUEST_BODY_MUST_NOT_BE_NULL
-import javax.annotation.security.PermitAll
-import javax.annotation.security.RolesAllowed
-import javax.transaction.Transactional
-import javax.validation.Valid
-import javax.validation.constraints.NotNull
-import javax.ws.rs.Consumes
-import javax.ws.rs.GET
-import javax.ws.rs.POST
-import javax.ws.rs.PUT
-import javax.ws.rs.Path
-import javax.ws.rs.Produces
-import javax.ws.rs.core.Context
-import javax.ws.rs.core.MediaType.APPLICATION_JSON
-import javax.ws.rs.core.Response
-import javax.ws.rs.core.Response.Status.CREATED
-import javax.ws.rs.core.Response.Status.OK
-import javax.ws.rs.core.Response.ok
-import javax.ws.rs.core.SecurityContext
-import javax.ws.rs.core.UriBuilder.fromResource
+import jakarta.annotation.security.PermitAll
+import jakarta.annotation.security.RolesAllowed
+import jakarta.transaction.Transactional
+import jakarta.validation.Valid
+import jakarta.validation.constraints.NotNull
+import jakarta.ws.rs.Consumes
+import jakarta.ws.rs.GET
+import jakarta.ws.rs.POST
+import jakarta.ws.rs.PUT
+import jakarta.ws.rs.Path
+import jakarta.ws.rs.Produces
+import jakarta.ws.rs.core.Context
+import jakarta.ws.rs.core.MediaType.APPLICATION_JSON
+import jakarta.ws.rs.core.Response
+import jakarta.ws.rs.core.Response.Status.CREATED
+import jakarta.ws.rs.core.Response.Status.OK
+import jakarta.ws.rs.core.Response.ok
+import jakarta.ws.rs.core.SecurityContext
+import jakarta.ws.rs.core.UriBuilder.fromResource
 
 @Path("/")
 class UserResource(
     private val service: UserService
 ) {
-
     @POST
     @Path(USERS_PATH)
     @Transactional
     @Consumes(APPLICATION_JSON)
     @PermitAll
     fun register(
-        @Valid @NotNull(message = REQUEST_BODY_MUST_NOT_BE_NULL) newUser: UserRegistrationRequest,
-    ): Response = service.register(newUser).run {
-        ok(this).status(CREATED)
-            .location(fromResource(UserResource::class.java).path("$USERS_PATH/$username").build())
-            .build()
-    }
+        @Valid @NotNull(message = REQUEST_BODY_MUST_NOT_BE_NULL) newUser: UserRegistrationRequest
+    ): Response =
+        service.register(newUser).run {
+            ok(this).status(CREATED)
+                .location(fromResource(UserResource::class.java).path("$USERS_PATH/$username").build())
+                .build()
+        }
 
     @POST
     @Path("$USERS_PATH/login")
@@ -69,6 +69,6 @@ class UserResource(
     @RolesAllowed(USER, ADMIN)
     fun updateLoggedInUser(
         @Context securityContext: SecurityContext,
-        @Valid @NotNull(message = REQUEST_BODY_MUST_NOT_BE_NULL) userUpdateRequest: UserUpdateRequest,
+        @Valid @NotNull(message = REQUEST_BODY_MUST_NOT_BE_NULL) userUpdateRequest: UserUpdateRequest
     ): Response = ok(service.update(securityContext.userPrincipal.name, userUpdateRequest)).status(OK).build()
 }

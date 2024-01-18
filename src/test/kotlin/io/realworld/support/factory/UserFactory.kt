@@ -20,7 +20,7 @@ class UserFactory {
          * Creates X amount of User with random details
          */
         fun create(
-            amount: Int,
+            amount: Int
         ): List<User> = (0 until amount).map { create() }
     }
 }

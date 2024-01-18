@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 internal class BCryptHashProviderTest {
-
     private lateinit var bCryptHashProvider: BCryptHashProvider
 
     @BeforeEach

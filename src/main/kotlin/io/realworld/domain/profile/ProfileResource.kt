@@ -2,26 +2,25 @@ package io.realworld.domain.profile
 
 import io.realworld.infrastructure.security.Role.USER
 import io.realworld.infrastructure.web.Routes.PROFILES_PATH
-import javax.annotation.security.PermitAll
-import javax.annotation.security.RolesAllowed
-import javax.ws.rs.DELETE
-import javax.ws.rs.GET
-import javax.ws.rs.POST
-import javax.ws.rs.Path
-import javax.ws.rs.PathParam
-import javax.ws.rs.Produces
-import javax.ws.rs.core.Context
-import javax.ws.rs.core.MediaType.APPLICATION_JSON
-import javax.ws.rs.core.Response
-import javax.ws.rs.core.Response.Status.OK
-import javax.ws.rs.core.Response.ok
-import javax.ws.rs.core.SecurityContext
+import jakarta.annotation.security.PermitAll
+import jakarta.annotation.security.RolesAllowed
+import jakarta.ws.rs.DELETE
+import jakarta.ws.rs.GET
+import jakarta.ws.rs.POST
+import jakarta.ws.rs.Path
+import jakarta.ws.rs.PathParam
+import jakarta.ws.rs.Produces
+import jakarta.ws.rs.core.Context
+import jakarta.ws.rs.core.MediaType.APPLICATION_JSON
+import jakarta.ws.rs.core.Response
+import jakarta.ws.rs.core.Response.Status.OK
+import jakarta.ws.rs.core.Response.ok
+import jakarta.ws.rs.core.SecurityContext
 
 @Path(PROFILES_PATH)
 class ProfileResource(
     private val service: ProfileService
 ) {
-
     @GET
     @Path("/{username}")
     @Produces(APPLICATION_JSON)
@@ -38,9 +37,10 @@ class ProfileResource(
     fun follow(
         @Context securityContext: SecurityContext,
         @PathParam("username") username: String
-    ): Response = service.follow(username, securityContext.userPrincipal.name).run {
-        ok(service.findProfile(username, securityContext.userPrincipal.name)).status(OK).build()
-    }
+    ): Response =
+        service.follow(username, securityContext.userPrincipal.name).run {
+            ok(service.findProfile(username, securityContext.userPrincipal.name)).status(OK).build()
+        }
 
     @DELETE
     @Path("/{username}/follow")
@@ -49,7 +49,8 @@ class ProfileResource(
     fun unfollow(
         @Context securityContext: SecurityContext,
         @PathParam("username") username: String
-    ): Response = service.unfollow(username, securityContext.userPrincipal.name).run {
-        ok(service.findProfile(username, securityContext.userPrincipal.name)).status(OK).build()
-    }
+    ): Response =
+        service.unfollow(username, securityContext.userPrincipal.name).run {
+            ok(service.findProfile(username, securityContext.userPrincipal.name)).status(OK).build()
+        }
 }

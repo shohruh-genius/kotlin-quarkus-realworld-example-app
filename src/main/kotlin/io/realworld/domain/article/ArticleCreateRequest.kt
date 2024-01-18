@@ -13,17 +13,17 @@ import java.util.UUID.randomUUID
 data class ArticleCreateRequest(
     @JsonProperty("title")
     val title: String,
-
     @JsonProperty("description")
     val description: String,
-
     @JsonProperty("body")
     val body: String,
-
     @JsonProperty("tagList")
-    val tagList: List<String>? = null,
+    val tagList: List<String>? = null
 ) {
-    fun toEntity(authorId: String, articleId: UUID = randomUUID()) = Article(
+    fun toEntity(
+        authorId: String,
+        articleId: UUID = randomUUID()
+    ) = Article(
         slug = articleId,
         title = title,
         description = description,

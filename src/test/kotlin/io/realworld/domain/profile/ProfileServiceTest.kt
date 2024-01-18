@@ -14,6 +14,7 @@ import org.mockito.Mockito.`when`
 internal class ProfileServiceTest {
     @InjectMock
     lateinit var userRepository: UserRepository
+
     @InjectMock
     lateinit var followRelationshipRepository: FollowRelationshipRepository
 
@@ -21,10 +22,11 @@ internal class ProfileServiceTest {
 
     @BeforeEach
     internal fun setUp() {
-        service = ProfileService(
-            userRepository,
-            followRelationshipRepository
-        )
+        service =
+            ProfileService(
+                userRepository,
+                followRelationshipRepository
+            )
     }
 
     @Test

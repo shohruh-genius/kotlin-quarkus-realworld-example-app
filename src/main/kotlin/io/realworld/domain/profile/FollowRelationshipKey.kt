@@ -2,17 +2,16 @@ package io.realworld.domain.profile
 
 import io.quarkus.runtime.annotations.RegisterForReflection
 import java.io.Serializable
-import javax.persistence.Column
-import javax.persistence.Embeddable
+import jakarta.persistence.Column
+import jakarta.persistence.Embeddable
 
 @Embeddable
 @RegisterForReflection
 open class FollowRelationshipKey(
     @Column
     open var userId: String = "",
-
     @Column
-    open var followingId: String = "",
+    open var followingId: String = ""
 ) : Serializable {
     override fun toString(): String = "FollowRelationshipKey($userId, $followingId)"
 

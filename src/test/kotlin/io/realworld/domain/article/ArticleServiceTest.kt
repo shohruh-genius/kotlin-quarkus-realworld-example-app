@@ -20,8 +20,10 @@ import java.util.UUID
 internal class ArticleServiceTest {
     @InjectMock
     lateinit var repository: ArticleRepository
+
     @InjectMock
     lateinit var favoriteRelationshipRepository: FavoriteRelationshipRepository
+
     @InjectMock
     lateinit var followRelationshipRepository: FollowRelationshipRepository
 
@@ -29,11 +31,12 @@ internal class ArticleServiceTest {
 
     @BeforeEach
     internal fun setUp() {
-        service = ArticleService(
-            repository,
-            favoriteRelationshipRepository,
-            followRelationshipRepository
-        )
+        service =
+            ArticleService(
+                repository,
+                favoriteRelationshipRepository,
+                followRelationshipRepository
+            )
     }
 
     @Test
@@ -54,7 +57,7 @@ internal class ArticleServiceTest {
                     article = existingArticle,
                     favoritesCount = 5,
                     isFavorited = false,
-                    isFollowing = false,
+                    isFollowing = false
                 ),
                 result
             )
@@ -64,9 +67,10 @@ internal class ArticleServiceTest {
     @Test
     fun `Given a new article request, when service create article, then service should persist and return correct ArticleResponse`() {
         val loggedInUser = UserFactory.create()
-        val articleRequest = ArticleFactory.create().run {
-            ArticleCreateRequest(title, description, body, tagList.map { it.name })
-        }
+        val articleRequest =
+            ArticleFactory.create().run {
+                ArticleCreateRequest(title, description, body, tagList.map { it.name })
+            }
 
         val expectedEntity = articleRequest.toEntity(loggedInUser.username)
         val expectedResponse = ArticleResponse.build(expectedEntity)
@@ -98,9 +102,10 @@ internal class ArticleServiceTest {
 
         `when`(repository.findById(existingArticle.slug)).thenReturn(existingArticle)
 
-        val updateRequest = existingArticle.run {
-            ArticleUpdateRequest(title, description)
-        }
+        val updateRequest =
+            existingArticle.run {
+                ArticleUpdateRequest(title, description)
+            }
 
         val expectedUpdatedEntity = updateRequest.applyChangesTo(existingArticle)
         val expectedResponse = ArticleResponse.build(expectedUpdatedEntity)

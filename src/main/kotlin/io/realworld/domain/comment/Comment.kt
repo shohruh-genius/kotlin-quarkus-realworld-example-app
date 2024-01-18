@@ -6,13 +6,13 @@ import io.realworld.domain.user.User
 import io.realworld.infrastructure.database.Tables.COMMENT_TABLE
 import java.time.Instant
 import java.time.Instant.now
-import javax.persistence.Entity
-import javax.persistence.FetchType.LAZY
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.ManyToOne
-import javax.validation.constraints.PastOrPresent
-import javax.validation.constraints.Size
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
+import jakarta.validation.constraints.PastOrPresent
+import jakarta.validation.constraints.Size
 
 @Entity(name = COMMENT_TABLE)
 @RegisterForReflection
@@ -20,21 +20,16 @@ open class Comment(
     @Id
     @GeneratedValue
     open var id: Long = 0,
-
     @field:Size(min = 0, max = 1023)
     open var body: String = "",
-
     @field:PastOrPresent
     open var createdAt: Instant = now(),
-
     @field:PastOrPresent
     open var updatedAt: Instant = now(),
-
     @ManyToOne
     open var author: User = User(),
-
-    @ManyToOne(fetch = LAZY)
-    open var article: Article = Article(),
+    @ManyToOne(fetch = FetchType.LAZY)
+    open var article: Article = Article()
 ) {
     override fun toString(): String = "Comment($id, ${body.take(20)}, $createdAt, $updatedAt, ${author.username})"
 

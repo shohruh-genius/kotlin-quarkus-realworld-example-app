@@ -11,27 +11,26 @@ import java.time.Instant
 data class CommentResponse(
     @JsonProperty("id")
     val id: Long,
-
     @JsonProperty("body")
     val body: String,
-
     @JsonProperty("createdAt")
     val createdAt: Instant,
-
     @JsonProperty("updatedAt")
     val updatedAt: Instant,
-
     @JsonProperty("author")
-    val author: ProfileResponse,
+    val author: ProfileResponse
 ) {
     companion object {
         @JvmStatic
-        fun build(comment: Comment, isFollowing: Boolean = false) = CommentResponse(
+        fun build(
+            comment: Comment,
+            isFollowing: Boolean = false
+        ) = CommentResponse(
             comment.id,
             comment.body,
             comment.createdAt,
             comment.updatedAt,
-            ProfileResponse.build(comment.author, isFollowing),
+            ProfileResponse.build(comment.author, isFollowing)
         )
     }
 }

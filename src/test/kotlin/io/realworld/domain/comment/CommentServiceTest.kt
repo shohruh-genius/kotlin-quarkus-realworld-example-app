@@ -18,6 +18,7 @@ import java.util.UUID.randomUUID
 internal class CommentServiceTest {
     @InjectMock
     lateinit var commentRepository: CommentRepository
+
     @InjectMock
     lateinit var followRelationshipRepository: FollowRelationshipRepository
 
@@ -25,10 +26,11 @@ internal class CommentServiceTest {
 
     @BeforeEach
     internal fun setUp() {
-        service = CommentService(
-            commentRepository,
-            followRelationshipRepository
-        )
+        service =
+            CommentService(
+                commentRepository,
+                followRelationshipRepository
+            )
     }
 
     @Test
@@ -43,14 +45,15 @@ internal class CommentServiceTest {
         `when`(followRelationshipRepository.isFollowing(any(), any()))
             .thenReturn(false)
 
-        val expectedCommentsResponse = CommentsResponse.build(
-            relatedComments.map {
-                CommentResponse.build(
-                    comment = it,
-                    isFollowing = false
-                )
-            }
-        )
+        val expectedCommentsResponse =
+            CommentsResponse.build(
+                relatedComments.map {
+                    CommentResponse.build(
+                        comment = it,
+                        isFollowing = false
+                    )
+                }
+            )
 
         assertEquals(service.list(slug, loggedInUser.username), expectedCommentsResponse)
 

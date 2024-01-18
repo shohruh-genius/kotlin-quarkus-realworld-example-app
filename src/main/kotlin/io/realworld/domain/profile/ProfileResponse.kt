@@ -10,23 +10,24 @@ import io.realworld.domain.user.User
 data class ProfileResponse(
     @JsonProperty("username")
     val username: String,
-
     @JsonProperty("bio")
     val bio: String,
-
     @JsonProperty("image")
     val image: String,
-
     @JsonProperty("following")
-    val following: Boolean,
+    val following: Boolean
 ) {
     companion object {
         @JvmStatic
-        fun build(user: User, isFollowing: Boolean): ProfileResponse = ProfileResponse(
-            username = user.username,
-            bio = user.bio,
-            image = user.image,
-            following = isFollowing
-        )
+        fun build(
+            user: User,
+            isFollowing: Boolean
+        ): ProfileResponse =
+            ProfileResponse(
+                username = user.username,
+                bio = user.bio,
+                image = user.image,
+                following = isFollowing
+            )
     }
 }

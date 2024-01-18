@@ -12,9 +12,12 @@ import java.util.UUID
 @RegisterForReflection
 data class CommentCreateRequest(
     @JsonProperty("body")
-    val body: String,
+    val body: String
 ) {
-    fun toComment(slug: UUID, authorId: String) = Comment(
+    fun toComment(
+        slug: UUID,
+        authorId: String
+    ) = Comment(
         body = body,
         createdAt = now(),
         updatedAt = now(),

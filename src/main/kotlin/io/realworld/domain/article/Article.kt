@@ -12,21 +12,20 @@ import org.hibernate.annotations.OnDelete
 import org.hibernate.annotations.OnDeleteAction.CASCADE
 import java.time.Instant
 import java.time.Instant.now
-import java.util.UUID
+import java.util.*
 import java.util.UUID.randomUUID
-import javax.persistence.Entity
-import javax.persistence.CascadeType.PERSIST
-import javax.persistence.CascadeType.REMOVE
-import javax.persistence.Column
-import javax.persistence.FetchType.EAGER
-import javax.persistence.Id
-import javax.persistence.JoinTable
-import javax.persistence.ManyToMany
-import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
-import javax.validation.constraints.NotBlank
-import javax.validation.constraints.PastOrPresent
-import javax.validation.constraints.Size
+import jakarta.persistence.CascadeType
+import jakarta.persistence.Column
+import jakarta.persistence.Entity
+import jakarta.persistence.FetchType
+import jakarta.persistence.Id
+import jakarta.persistence.JoinTable
+import jakarta.persistence.ManyToMany
+import jakarta.persistence.ManyToOne
+import jakarta.persistence.OneToMany
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.PastOrPresent
+import jakarta.validation.constraints.Size
 
 @Entity(name = ARTICLE_TABLE)
 @RegisterForReflection
@@ -35,34 +34,26 @@ open class Article(
     @Column(columnDefinition = "uuid")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     open var slug: UUID = randomUUID(),
-
     @field:Size(min = 5, max = 127)
     @field:NotBlank(message = TITLE_MUST_NOT_BE_BLANK)
     open var title: String = "",
-
     @field:Size(min = 0, max = 255)
     open var description: String = "",
-
     @field:Size(min = 0, max = 4095)
     open var body: String = "",
-
     @field:Size(min = 0, max = 5)
-    @ManyToMany(fetch = EAGER, cascade = [PERSIST])
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = TAG_RELATIONSHIP)
     open var tagList: MutableList<Tag> = mutableListOf(),
-
     @field:PastOrPresent
     open var createdAt: Instant = now(),
-
     @field:PastOrPresent
     open var updatedAt: Instant = now(),
-
     @ManyToOne
     open var author: User = User(),
-
-    @OneToMany(cascade = [REMOVE], mappedBy = "article", orphanRemoval = true)
+    @OneToMany(cascade = [CascadeType.REMOVE], mappedBy = "article", orphanRemoval = true)
     @OnDelete(action = CASCADE)
-    open var comments: MutableList<Comment> = mutableListOf(),
+    open var comments: MutableList<Comment> = mutableListOf()
 ) {
     override fun toString(): String =
         "Article($slug, $title, ${description.take(20)}, ${body.take(20)}, $createdAt, $updatedAt, ${author.username})"

@@ -8,7 +8,7 @@ import io.quarkus.runtime.annotations.RegisterForReflection
 @RegisterForReflection
 data class CommentsResponse(
     @JsonValue
-    val comments: List<CommentResponse>,
+    val comments: List<CommentResponse>
 ) {
     companion object {
         @JvmStatic

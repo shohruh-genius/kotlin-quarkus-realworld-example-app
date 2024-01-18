@@ -7,8 +7,8 @@ import io.realworld.utils.ValidationMessages.Companion.PASSWORD_MUST_BE_NOT_BLAN
 import io.realworld.utils.ValidationMessages.Companion.USERNAME_MUST_MATCH_PATTERN
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import javax.inject.Inject
-import javax.validation.Validator
+import jakarta.inject.Inject
+import jakarta.validation.Validator
 
 @QuarkusTest
 internal class UserIT {
@@ -25,9 +25,10 @@ internal class UserIT {
     @Test
     fun `Given username must not have whitespace or special characters`() {
         val invalidUsername = "% invalid@Username ?!"
-        val constraintViolations = validator.validate(
-            UserFactory.create(username = invalidUsername, email = "valid@email.com")
-        )
+        val constraintViolations =
+            validator.validate(
+                UserFactory.create(username = invalidUsername, email = "valid@email.com")
+            )
 
         assertEquals(1, constraintViolations.size)
         assertEquals(
@@ -39,9 +40,10 @@ internal class UserIT {
     @Test
     fun `Given username must not be blank`() {
         val blankUsername = ""
-        val constraintViolations = validator.validate(
-            UserFactory.create(username = blankUsername, email = "valid@email.com")
-        )
+        val constraintViolations =
+            validator.validate(
+                UserFactory.create(username = blankUsername, email = "valid@email.com")
+            )
 
         assertEquals(1, constraintViolations.size)
         assertEquals(
@@ -53,9 +55,10 @@ internal class UserIT {
     @Test
     fun `Given email must follow valid format`() {
         val invalidEmail = "invalid@email@com"
-        val constraintViolations = validator.validate(
-            UserFactory.create(email = invalidEmail)
-        )
+        val constraintViolations =
+            validator.validate(
+                UserFactory.create(email = invalidEmail)
+            )
 
         assertEquals(1, constraintViolations.size)
     }
@@ -63,9 +66,10 @@ internal class UserIT {
     @Test
     fun `Given email must not be blank`() {
         val blankEmail = ""
-        val constraintViolations = validator.validate(
-            UserFactory.create(email = blankEmail)
-        )
+        val constraintViolations =
+            validator.validate(
+                UserFactory.create(email = blankEmail)
+            )
 
         assertEquals(1, constraintViolations.size)
         assertEquals(
@@ -77,9 +81,10 @@ internal class UserIT {
     @Test
     fun `Given password must not be blank`() {
         val blankPassword = ""
-        val constraintViolations = validator.validate(
-            UserFactory.create(password = blankPassword)
-        )
+        val constraintViolations =
+            validator.validate(
+                UserFactory.create(password = blankPassword)
+            )
 
         assertEquals(1, constraintViolations.size)
         assertEquals(

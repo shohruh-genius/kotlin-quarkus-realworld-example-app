@@ -9,16 +9,15 @@ import io.quarkus.runtime.annotations.RegisterForReflection
 data class UserRegistrationRequest(
     @JsonProperty("username")
     val username: String,
-
     @JsonProperty("email")
     val email: String,
-
     @JsonProperty("password")
-    val password: String,
+    val password: String
 ) {
-    fun toEntity() = User(
-        username = username,
-        email = email,
-        password = password
-    )
+    fun toEntity() =
+        User(
+            username = username,
+            email = email,
+            password = password
+        )
 }

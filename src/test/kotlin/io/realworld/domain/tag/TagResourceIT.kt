@@ -12,12 +12,12 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.Mockito.`when`
-import javax.inject.Inject
-import javax.ws.rs.core.HttpHeaders.CONTENT_TYPE
-import javax.ws.rs.core.HttpHeaders.LOCATION
-import javax.ws.rs.core.MediaType.APPLICATION_JSON
-import javax.ws.rs.core.Response.Status.CREATED
-import javax.ws.rs.core.Response.Status.OK
+import jakarta.inject.Inject
+import jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE
+import jakarta.ws.rs.core.HttpHeaders.LOCATION
+import jakarta.ws.rs.core.MediaType.APPLICATION_JSON
+import jakarta.ws.rs.core.Response.Status.CREATED
+import jakarta.ws.rs.core.Response.Status.OK
 
 /**
  * Testing a specific endpoints, see:
@@ -27,6 +27,7 @@ import javax.ws.rs.core.Response.Status.OK
 internal class TagResourceIT {
     @InjectMock
     lateinit var repository: TagRepository
+
     @Inject
     lateinit var objectMapper: ObjectMapper
 

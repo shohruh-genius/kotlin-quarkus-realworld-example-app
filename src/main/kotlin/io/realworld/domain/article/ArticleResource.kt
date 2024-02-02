@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import io.realworld.domain.exception.InvalidAuthorException
 import io.realworld.infrastructure.security.Role.ADMIN
 import io.realworld.infrastructure.security.Role.USER
-import io.realworld.infrastructure.web.NoJsonRootWrap
 import io.realworld.infrastructure.web.Routes.ARTICLES_PATH
 import io.realworld.utils.ValidationMessages.Companion.REQUEST_BODY_MUST_NOT_BE_NULL
 import java.util.*
@@ -33,7 +32,7 @@ import jakarta.ws.rs.core.UriBuilder
 
 @Path(ARTICLES_PATH)
 class ArticleResource(
-    @NoJsonRootWrap private val objectMapper: ObjectMapper, // FIXME: Using this annotation is throwing an unrecommended warning, see log.
+    private val objectMapper: ObjectMapper,
     private val service: ArticleService
 ) {
     @GET

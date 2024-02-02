@@ -22,11 +22,13 @@ data class ArticleResponse(
     val body: String,
     @JsonProperty("tagList")
     val tagList: TagsResponse,
+    // FIXME: pattern is failing to pass tests "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     @JsonProperty("createdAt")
-    @JsonFormat(shape = STRING) // FIXME: pattern is failing to pass tests "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    @JsonFormat(shape = STRING)
     val createdAt: Instant,
+    // FIXME: pattern is failing to pass tests "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     @JsonProperty("updatedAt")
-    @JsonFormat(shape = STRING) // FIXME: pattern is failing to pass tests "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    @JsonFormat(shape = STRING)
     val updatedAt: Instant,
     @JsonProperty("favorite")
     val favorite: Boolean,

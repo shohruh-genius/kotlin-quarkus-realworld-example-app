@@ -39,7 +39,7 @@ class ArticleRepository : PanacheRepositoryBase<Article, UUID> {
                         ) { this["authors"] = authors.toUpperCase() }
                         .addIf(
                             favorites.isNotEmpty(),
-                            JOIN("articles.favoritedBy as favorites"),
+                            JOIN("articles.favoriteBy as favorites"),
                             WHERE("upper(favorites.username) in (:favorites)")
                         ) { this["favorites"] = favorites.toUpperCase() }
                         .build(),

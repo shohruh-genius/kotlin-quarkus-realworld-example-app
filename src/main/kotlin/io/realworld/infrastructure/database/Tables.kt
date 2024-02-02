@@ -7,5 +7,5 @@ object Tables {
     const val COMMENT_TABLE = "Comments"
     const val FOLLOW_RELATIONSHIP = "Follow_Relationship"
     const val TAG_RELATIONSHIP = "Tag_Relationship"
-    const val FAVORITED_RELATIONSHIP = "Favorited_Relationship"
+    const val FAVORITE_RELATIONSHIP = "Favorite_Relationship"
 }

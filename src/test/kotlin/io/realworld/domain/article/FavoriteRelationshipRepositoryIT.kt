@@ -24,27 +24,27 @@ internal class FavoriteRelationshipRepositoryIT {
 
     @Test
     @Transactional
-    fun `Given existing article, when user favorite the article, then isFavorited should return true`() {
+    fun `Given existing article, when user favorite the article, then isFavorite should return true`() {
         val existingUser = UserFactory.create()
         val existingArticle = ArticleFactory.create()
 
         userRepository.persist(listOf(existingUser, existingArticle.author))
         articleRepository.persist(existingArticle)
 
-        assertFalse(favoriteRelationshipRepository.isFavorited(existingArticle.slug, existingUser.username))
+        assertFalse(favoriteRelationshipRepository.isFavorite(existingArticle.slug, existingUser.username))
 
         favoriteRelationshipRepository.favorite(existingArticle.slug, existingUser.username)
 
-        assertTrue(favoriteRelationshipRepository.isFavorited(existingArticle.slug, existingUser.username))
+        assertTrue(favoriteRelationshipRepository.isFavorite(existingArticle.slug, existingUser.username))
 
         favoriteRelationshipRepository.unFavorite(existingArticle.slug, existingUser.username)
 
-        assertFalse(favoriteRelationshipRepository.isFavorited(existingArticle.slug, existingUser.username))
+        assertFalse(favoriteRelationshipRepository.isFavorite(existingArticle.slug, existingUser.username))
     }
 
     @Test
     @Transactional
-    fun `Given existing article favorite by 5 users, when favoritedCount is queried, then repository should return correct value`() {
+    fun `Given existing article favorite by 5 users, when favoriteCount is queried, then repository should return correct value`() {
         val existingUsers = UserFactory.create(5)
         val existingArticle = ArticleFactory.create()
 
@@ -55,6 +55,6 @@ internal class FavoriteRelationshipRepositoryIT {
             favoriteRelationshipRepository.favorite(existingArticle.slug, it.username)
         }
 
-        assertEquals(5, favoriteRelationshipRepository.favoritedCount(existingArticle.slug))
+        assertEquals(5, favoriteRelationshipRepository.favoriteCount(existingArticle.slug))
     }
 }

@@ -2,12 +2,12 @@ package io.realworld.domain.article
 
 import io.quarkus.hibernate.orm.panache.kotlin.PanacheEntityBase
 import io.quarkus.runtime.annotations.RegisterForReflection
-import io.realworld.infrastructure.database.Tables.FAVORITED_RELATIONSHIP
+import io.realworld.infrastructure.database.Tables.FAVORITE_RELATIONSHIP
 import java.util.UUID.randomUUID
 import jakarta.persistence.EmbeddedId
 import jakarta.persistence.Entity
 
-@Entity(name = FAVORITED_RELATIONSHIP)
+@Entity(name = FAVORITE_RELATIONSHIP)
 @RegisterForReflection
 open class FavoriteRelationship(
     @EmbeddedId

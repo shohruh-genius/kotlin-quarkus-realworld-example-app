@@ -46,7 +46,7 @@ internal class ArticleServiceTest {
         `when`(repository.findById(existingArticle.slug)).thenReturn(existingArticle)
 
         existingArticle.run {
-            `when`(favoriteRelationshipRepository.favoritedCount(slug)).thenReturn(5)
+            `when`(favoriteRelationshipRepository.favoriteCount(slug)).thenReturn(5)
         }
 
         val result = service.get(existingArticle.slug)
@@ -56,7 +56,7 @@ internal class ArticleServiceTest {
                 ArticleResponse.build(
                     article = existingArticle,
                     favoritesCount = 5,
-                    isFavorited = false,
+                    isFavorite = false,
                     isFollowing = false
                 ),
                 result
@@ -143,8 +143,8 @@ internal class ArticleServiceTest {
             .thenReturn(articlesWithAuthorsLoggedInUserFollows)
 
         articlesWithAuthorsLoggedInUserFollows.forEach {
-            `when`(favoriteRelationshipRepository.favoritedCount(it.slug)).thenReturn(1)
-            `when`(favoriteRelationshipRepository.isFavorited(it.slug, loggedInUser.username)).thenReturn(true)
+            `when`(favoriteRelationshipRepository.favoriteCount(it.slug)).thenReturn(1)
+            `when`(favoriteRelationshipRepository.isFavorite(it.slug, loggedInUser.username)).thenReturn(true)
             `when`(followRelationshipRepository.isFollowing(it.author.username, loggedInUser.username)).thenReturn(true)
         }
 
@@ -157,7 +157,7 @@ internal class ArticleServiceTest {
                 ArticleResponse.build(
                     article = articlesWithAuthorsLoggedInUserFollows[index],
                     favoritesCount = 1,
-                    isFavorited = true,
+                    isFavorite = true,
                     isFollowing = true
                 ),
                 articleResponse

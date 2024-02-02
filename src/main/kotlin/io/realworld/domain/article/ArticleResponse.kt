@@ -28,8 +28,8 @@ data class ArticleResponse(
     @JsonProperty("updatedAt")
     @JsonFormat(shape = STRING) // FIXME: pattern is failing to pass tests "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     val updatedAt: Instant,
-    @JsonProperty("favorited")
-    val favorited: Boolean,
+    @JsonProperty("favorite")
+    val favorite: Boolean,
     @JsonProperty("favoritesCount")
     val favoritesCount: Long,
     @JsonProperty("author")
@@ -40,7 +40,7 @@ data class ArticleResponse(
         fun build(
             article: Article,
             favoritesCount: Long = 0,
-            isFavorited: Boolean = false,
+            isFavorite: Boolean = false,
             isFollowing: Boolean = false
         ): ArticleResponse =
             ArticleResponse(
@@ -51,7 +51,7 @@ data class ArticleResponse(
                 tagList = TagsResponse.build(article.tagList),
                 createdAt = article.createdAt,
                 updatedAt = article.updatedAt,
-                favorited = isFavorited,
+                favorite = isFavorite,
                 favoritesCount = favoritesCount,
                 author = ProfileResponse.build(article.author, isFollowing)
             )

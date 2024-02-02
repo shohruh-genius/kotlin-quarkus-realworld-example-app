@@ -7,7 +7,7 @@ import jakarta.enterprise.context.ApplicationScoped
 
 @ApplicationScoped
 class FavoriteRelationshipRepository : PanacheRepositoryBase<FavoriteRelationship, FavoriteRelationshipKey> {
-    fun isFavorited(
+    fun isFavorite(
         articleId: UUID,
         favoriteById: String
     ): Boolean =
@@ -16,7 +16,7 @@ class FavoriteRelationshipRepository : PanacheRepositoryBase<FavoriteRelationshi
             params = Parameters.with("articleId", articleId).and("favoriteById", favoriteById)
         ) > 0
 
-    fun favoritedCount(articleId: UUID): Long =
+    fun favoriteCount(articleId: UUID): Long =
         count(
             query = "id.articleId = :articleId",
             params = Parameters.with("articleId", articleId)

@@ -22,14 +22,14 @@ class ArticleService(
                 if (loggedInUserId != null) {
                     ArticleResponse.build(
                         article = this,
-                        favoritesCount = favoriteRelationshipRepository.favoritedCount(slug),
-                        isFavorited = favoriteRelationshipRepository.isFavorited(slug, loggedInUserId),
+                        favoritesCount = favoriteRelationshipRepository.favoriteCount(slug),
+                        isFavorite = favoriteRelationshipRepository.isFavorite(slug, loggedInUserId),
                         isFollowing = followRelationshipRepository.isFollowing(author.username, loggedInUserId)
                     )
                 } else {
                     ArticleResponse.build(
                         article = this,
-                        favoritesCount = favoriteRelationshipRepository.favoritedCount(slug)
+                        favoritesCount = favoriteRelationshipRepository.favoriteCount(slug)
                     )
                 }
             } ?: throw ArticleNotFoundException()
@@ -79,14 +79,14 @@ class ArticleService(
                         if (loggedInUserId != null) {
                             ArticleResponse.build(
                                 article = it,
-                                favoritesCount = favoriteRelationshipRepository.favoritedCount(it.slug),
-                                isFavorited = favoriteRelationshipRepository.isFavorited(it.slug, loggedInUserId),
+                                favoritesCount = favoriteRelationshipRepository.favoriteCount(it.slug),
+                                isFavorite = favoriteRelationshipRepository.isFavorite(it.slug, loggedInUserId),
                                 isFollowing = followRelationshipRepository.isFollowing(it.author.username, loggedInUserId)
                             )
                         } else {
                             ArticleResponse.build(
                                 article = it,
-                                favoritesCount = favoriteRelationshipRepository.favoritedCount(it.slug)
+                                favoritesCount = favoriteRelationshipRepository.favoriteCount(it.slug)
                             )
                         }
                     }
@@ -105,8 +105,8 @@ class ArticleService(
                     this.map {
                         ArticleResponse.build(
                             article = it,
-                            favoritesCount = favoriteRelationshipRepository.favoritedCount(it.slug),
-                            isFavorited = favoriteRelationshipRepository.isFavorited(it.slug, loggedInUserId),
+                            favoritesCount = favoriteRelationshipRepository.favoriteCount(it.slug),
+                            isFavorite = favoriteRelationshipRepository.isFavorite(it.slug, loggedInUserId),
                             isFollowing = followRelationshipRepository.isFollowing(it.author.username, loggedInUserId)
                         )
                     }

@@ -44,7 +44,7 @@ class ArticleResource(
         @QueryParam("offset") @DefaultValue("0") offset: Int = 0,
         @QueryParam("tag") tags: List<String> = listOf(),
         @QueryParam("author") authors: List<String> = listOf(),
-        @QueryParam("favorited") favorites: List<String> = listOf(),
+        @QueryParam("favorite") favorites: List<String> = listOf(),
         @Context securityContext: SecurityContext?
     ): Response =
         ok(

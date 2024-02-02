@@ -93,7 +93,7 @@ internal class ArticleResourceIT {
             .body("article.tagList", equalTo(existingArticle.tagList))
             .body("article.createdAt", equalTo(existingArticle.createdAt.toString()))
             .body("article.updatedAt", equalTo(existingArticle.updatedAt.toString()))
-            .body("article.favorited", equalTo(false))
+            .body("article.favorite", equalTo(false))
             .body("article.favoritesCount", equalTo(0))
             .body("article.author.size()", equalTo(4))
             .body("article.author.username", equalTo(existingArticle.author.username))

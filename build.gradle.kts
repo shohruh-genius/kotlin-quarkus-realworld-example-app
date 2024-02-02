@@ -31,7 +31,7 @@ dependencies {
     implementation("io.quarkus:quarkus-smallrye-jwt")
     implementation("io.quarkus:quarkus-smallrye-jwt-build")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.16.1")
-    implementation("at.favre.lib:bcrypt:0.9.0")
+    implementation("at.favre.lib:bcrypt:0.10.2")
     testImplementation("io.quarkus:quarkus-junit5-mockito")
     testImplementation("io.quarkus:quarkus-test-security-jwt")
     testImplementation("io.rest-assured:rest-assured")
